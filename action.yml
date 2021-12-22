@@ -1,0 +1,35 @@
+name: 'Get Azure VM state'
+description: 'Action check the Aure VM state.'
+branding:
+  icon: 'award'  
+  color: 'blue'
+inputs:
+  AzureVMName: 
+    description: 'The name of the Azure VM.'
+    required: true
+    default: '123456'
+  AzureTenantId: 
+    description: 'The Azure TenantID or Tenant Name.'
+    required: true
+    default: ''
+  AzureVMResourceGroup: 
+    description: 'The Resource Group VM located.'
+    required: true
+    default: ''
+  AzureClientId: 
+    description: 'AAD registered application ID.'
+    required: true
+    default: ''
+  AzureClientSecret: 
+    description: 'AAD Registered Application Secret.'
+    required: true
+    default: ''
+outputs:
+  VMState:
+    value: ${{ steps.VMState.outputs.VMState }}
+runs:
+  using: "composite"
+  steps:
+  - id: VMState
+    shell: powershell
+    run: $VMState = ${{ github.action_path }}/GetAzureVMState.ps1 -AzureVMName ${{ inputs.AzureVMName }} -AzureTenantId ${{ inputs.AzureTenantId }}  -AzureVMResourceGroup "${{ inputs.AzureVMResourceGroup }}" -AzureClientId "${{ inputs.AzureClientId }}" -AzureClientSecret "${{ inputs.AzureClientSecret }}";echo "::set-output name=VMState::$(echo $VMState)"
