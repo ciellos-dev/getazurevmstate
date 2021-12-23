@@ -41,7 +41,7 @@ $AzureRMAccount = Add-AzureRmAccount -Credential $psCred -ServicePrincipal -Tena
 
 if ($AzureRMAccount) { 
     #Do Logic
-    Write-Output "== Logged in == $AzureTenantId "
+    Write-Host "== Logged in == $AzureTenantId "
 
     Write-Host "Getting Azure VM State $AzureVMName"
     $VMStats = (Get-AzureRmVM -Name "$AzureVMName" -ResourceGroupName "$AzureVMResourceGroup" -Status -Verbose).Statuses
