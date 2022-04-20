@@ -15,8 +15,8 @@ $psCred = New-Object System.Management.Automation.PSCredential($AzureClientId , 
 Write-Host "Installing PowerShell modules d365fo.tools and Az" 
 #Check Modules installed
 $NuGet = Get-PackageProvider -Name nuget -ErrorAction SilentlyContinue
-$Az = Get-InstalledModule -Name Az -ErrorAction SilentlyContinue
-$DfoTools = Get-InstalledModule -Name d365fo.tools -ErrorAction SilentlyContinue
+$Az = Get-InstalledModule -Name Az -Scope Local -ErrorAction SilentlyContinue
+$DfoTools = Get-InstalledModule -Name d365fo.tools -Scope Local -ErrorAction SilentlyContinue
 
 if(Get-PSRepository -Name PSGallery1 -ErrorAction SilentlyContinue)
 {
@@ -34,13 +34,13 @@ Set-PSRepository -Name PSGalleryNew -InstallationPolicy Trusted
 if([string]::IsNullOrEmpty($NuGet))
 {
     Write-Host "NuGet not installed. Installing..." 
-    Install-PackageProvider nuget -Scope CurrentUser -Verbose -Force -Confirm:$false
+    Install-PackageProvider nuget -Scope Local -Verbose -Force -Confirm:$false
 }
 
 if([string]::IsNullOrEmpty($Az))
 {
     Write-Host "Az not installed. Installing..." 
-    Install-Module -Name Az -AllowClobber -Scope CurrentUser -Verbose -Force -Confirm:$False -SkipPublisherCheck 
+    Install-Module -Name Az -AllowClobber -Scope Local -Verbose -Force -Confirm:$False -SkipPublisherCheck 
 }
 else
 {
@@ -50,7 +50,7 @@ else
 if([string]::IsNullOrEmpty($DfoTools))
 {
     Write-Host "d365fo.tools not installed. Installing..." 
-    Install-Module -Name d365fo.tools -Repository PSGalleryNew -Scope CurrentUser -Verbose -Force -Confirm:$false
+    Install-Module -Name d365fo.tools -Repository PSGalleryNew -Scope Local -Verbose -Force -Confirm:$false
 }
 else
 {
