@@ -22,8 +22,9 @@ if(Get-PSRepository -Name PSGallery1 -ErrorAction SilentlyContinue)
 {
     Unregister-PSRepository -Name PSGallery1
 }
+Unregister-PSRepository -Name PSGallery
+Register-PSRepository -Name PSGallery -SourceLocation https://www.powershellgallery.com/api/v2/ -PublishLocation https://www.powershellgallery.com/api/v2/package/ -ScriptSourceLocation https://www.powershellgallery.com/api/v2/items/psscript/ -ScriptPublishLocation https://www.powershellgallery.com/api/v2/package/ -InstallationPolicy Trusted -PackageManagementProvider NuGet
 
-Register-PSRepository -Name PSGallery -SourceLocation https://www.powershellgallery.com/api/v2 -InstallationPolicy Trusted
 Set-PSRepository -Name PSGallery -InstallationPolicy Trusted
 
 if([string]::IsNullOrEmpty($NuGet))
