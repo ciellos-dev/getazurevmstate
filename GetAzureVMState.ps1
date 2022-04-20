@@ -35,7 +35,7 @@ if([string]::IsNullOrEmpty($NuGet))
 if([string]::IsNullOrEmpty($Az))
 {
     Write-Host "Az not installed. Installing..." 
-    Install-Module -Name Az -AllowClobber -Scope CurrentUser -Repository PSGalleryNew -Verbose -Force -Confirm:$False -SkipPublisherCheck 
+    Install-Module -Name Az -AllowClobber -Scope CurrentUser -Verbose -Force -Confirm:$False -SkipPublisherCheck 
 }
 else
 {
@@ -45,7 +45,7 @@ else
 if([string]::IsNullOrEmpty($DfoTools))
 {
     Write-Host "d365fo.tools not installed. Installing..." 
-    Install-Module -Name d365fo.tools -Repository PSGalleryNew -Scope CurrentUser -Repository PSGalleryNew -Verbose -Force -Confirm:$false
+    Install-Module -Name d365fo.tools -Repository PSGalleryNew -Scope CurrentUser -Verbose -Force -Confirm:$false
 }
 else
 {
