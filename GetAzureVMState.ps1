@@ -16,17 +16,16 @@ $psCred = New-Object System.Management.Automation.PSCredential($AzureClientId , 
 Write-Host "Installing PowerShell modules d365fo.tools and AzureRM" 
 #Check Modules installed
 $NuGet = Get-PackageProvider -Name nuget -ErrorAction SilentlyContinue
-$AzureRMCompute = Get-InstalledModule -Name AzureRM.Compute -ErrorAction SilentlyContinue
+$Az = Get-InstalledModule -Name AZ -ErrorAction SilentlyContinue
 $DfoTools = Get-InstalledModule -Name d365fo.tools -ErrorAction SilentlyContinue
 
 if([string]::IsNullOrEmpty($NuGet))
 {
     Install-PackageProvider nuget -Scope CurrentUser -Force -Confirm:$false
 }
-if([string]::IsNullOrEmpty($AzureRMCompute))
+if([string]::IsNullOrEmpty($Az))
 {
-    Install-Module -Name 'AzureRM.Compute' -AllowClobber -Scope CurrentUser -Force -Confirm:$False -SkipPublisherCheck
-    Import-Module -Name 'AzureRM.Compute'
+    Install-Module -Name AZ -AllowClobber -Scope CurrentUser -Force -Confirm:$False -SkipPublisherCheck
 }
 if([string]::IsNullOrEmpty($DfoTools))
 {
