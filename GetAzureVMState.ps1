@@ -34,7 +34,7 @@ if([string]::IsNullOrEmpty($Az))
 else
 {
     Write-Host "Az already installed. Updating..." 
-    Update-Module -Name Az -AllowClobber -Verbose
+    Update-Module -Name Az -Verbose
 }
 if([string]::IsNullOrEmpty($DfoTools))
 {
@@ -44,7 +44,7 @@ if([string]::IsNullOrEmpty($DfoTools))
 else
 {
     Write-Host "d365fo.tools already installed. Updating..."
-    Update-Module -Name d365fo.tools -AllowClobber -Verbose
+    Update-Module -Name d365fo.tools -Verbose
 }
 
 Import-Module -Name Az
