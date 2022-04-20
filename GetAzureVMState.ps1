@@ -22,10 +22,9 @@ if(Get-PSRepository -Name PSGallery1 -ErrorAction SilentlyContinue)
 {
     Unregister-PSRepository -Name PSGallery1
 }
-Unregister-PSRepository -Name PSGallery
-Register-PSRepository -Name PSGallery -SourceLocation https://www.powershellgallery.com/api/v2/ -PublishLocation https://www.powershellgallery.com/api/v2/package/ -ScriptSourceLocation https://www.powershellgallery.com/api/v2/items/psscript/ -ScriptPublishLocation https://www.powershellgallery.com/api/v2/package/ -InstallationPolicy Trusted -PackageManagementProvider NuGet
+Register-PSRepository -Name PSGalleryNew -SourceLocation https://www.powershellgallery.com/api/v2/ -PublishLocation https://www.powershellgallery.com/api/v2/package/ -ScriptSourceLocation https://www.powershellgallery.com/api/v2/items/psscript/ -ScriptPublishLocation https://www.powershellgallery.com/api/v2/package/ -InstallationPolicy Trusted -PackageManagementProvider NuGet
 
-Set-PSRepository -Name PSGallery -InstallationPolicy Trusted
+Set-PSRepository -Name PSGalleryNew -InstallationPolicy Trusted
 
 if([string]::IsNullOrEmpty($NuGet))
 {
@@ -36,17 +35,17 @@ if([string]::IsNullOrEmpty($NuGet))
 if([string]::IsNullOrEmpty($Az))
 {
     Write-Host "Az not installed. Installing..." 
-    Install-Module -Name Az -AllowClobber -Scope CurrentUser -Verbose -Force -Confirm:$False -SkipPublisherCheck 
+    Install-Module -Name Az -AllowClobber -Scope CurrentUser -Repository PSGalleryNew -Verbose -Force -Confirm:$False -SkipPublisherCheck 
 }
 else
 {
     Write-Host "Az already installed. Updating..." 
-    Update-Module -Name Az -Verbose
+    Update-Module -Name Az -Repository PSGalleryNew -Verbose
 }
 if([string]::IsNullOrEmpty($DfoTools))
 {
     Write-Host "d365fo.tools not installed. Installing..." 
-    Install-Module -Name d365fo.tools -AllowClobber -Scope CurrentUser -Verbose -Force -Confirm:$false
+    Install-Module -Name d365fo.tools -Repository PSGalleryNew -Scope CurrentUser -Repository PSGalleryNew -Verbose -Force -Confirm:$false
 }
 else
 {
@@ -54,7 +53,7 @@ else
     Update-Module -Name d365fo.tools -Verbose
 }
 
-Import-Module 'Az.Account'
+Import-Module 'Az' -Verbose 
 Import-Module 'd365fo.tools'
 
 $AzureRMAccount = Add-AzAccount -Credential $psCred -ServicePrincipal -TenantId $AzureTenantId -Verbose 
