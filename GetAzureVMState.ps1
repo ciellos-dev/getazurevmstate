@@ -57,8 +57,8 @@ else
     Write-Host "d365fo.tools already installed. Updating..."
     Update-Module -Name d365fo.tools -Verbose
 }
-cd modules\az
-Import-Module .\Az.psm1 -Verbose 
+
+Import-Module Az.psm1 -Scope CurrentUser -Verbose 
 
 $AzureRMAccount = Add-AzAccount -Credential $psCred -ServicePrincipal -TenantId $AzureTenantId -Verbose 
 
