@@ -36,14 +36,14 @@ if([string]::IsNullOrEmpty($DfoTools))
 Set-PSRepository -Name PSGallery -InstallationPolicy Trusted
 
 
-$AzureRMAccount = Add-AzureRmAccount -Credential $psCred -ServicePrincipal -TenantId $AzureTenantId 
+$AzureRMAccount = Add-AzAccount -Credential $psCred -ServicePrincipal -TenantId $AzureTenantId 
 
 if ($AzureRMAccount) { 
     #Do Logic
     Write-Host "== Logged in == $AzureTenantId "
 
     Write-Host "Getting Azure VM State $AzureVMName"
-    $VMStats = (Get-AzureRmVM -Name "$AzureVMName" -ResourceGroupName "$AzureVMResourceGroup" -Status -Verbose).Statuses
+    $VMStats = (Get-AzVM -Name "$AzureVMName" -ResourceGroupName "$AzureVMResourceGroup" -Status -Verbose).Statuses
     $PowerState = ($VMStats | Where Code -Like 'PowerState/*')[0].Code.Split("/")[1]
     Write-Host "....state is" $PowerState
     return $PowerState
