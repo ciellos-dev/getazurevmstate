@@ -15,9 +15,9 @@ $psCred = New-Object System.Management.Automation.PSCredential($AzureClientId , 
 # This is requried by Find-Module, by doing it beforehand we remove some warning messages
 Write-Host "Installing PowerShell modules d365fo.tools and AzureRM" 
 #Check Modules installed
-$NuGet = Get-PackageProvider -Name nuget -ErrorAction SilentlyContinue
-$Az = Get-InstalledModule -Name Az -ErrorAction SilentlyContinue
-$DfoTools = Get-InstalledModule -Name d365fo.tools -ErrorAction SilentlyContinue
+$NuGet = Get-PackageProvider -Name nuget
+$Az = Get-InstalledModule -Name Az
+$DfoTools = Get-InstalledModule -Name d365fo.tools #-ErrorAction SilentlyContinue
 
 if([string]::IsNullOrEmpty($NuGet))
 {
