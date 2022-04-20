@@ -17,6 +17,7 @@ Write-Host "Installing PowerShell modules d365fo.tools and Az"
 $NuGet = Get-PackageProvider -Name nuget -ErrorAction SilentlyContinue
 $Az = Get-InstalledModule -Name Az -ErrorAction SilentlyContinue
 $DfoTools = Get-InstalledModule -Name d365fo.tools -ErrorAction SilentlyContinue
+
 Set-PSRepository -Name PSGallery -InstallationPolicy Trusted
 
 if([string]::IsNullOrEmpty($NuGet))
@@ -28,18 +29,17 @@ if([string]::IsNullOrEmpty($NuGet))
 if([string]::IsNullOrEmpty($Az))
 {
     Write-Host "Az not installed. Installing..." 
-    Install-Module -Name Az -AllowClobber -Verbose -Force -Confirm:$False -SkipPublisherCheck 
+    Install-Module -Name Az -AllowClobber -Scope CurrentUser -Verbose -Force -Confirm:$False -SkipPublisherCheck 
 }
 else
 {
-    
     Write-Host "Az already installed. Updating..." 
     Update-Module -Name Az -Verbose
 }
 if([string]::IsNullOrEmpty($DfoTools))
 {
     Write-Host "d365fo.tools not installed. Installing..." 
-    Install-Module -Name d365fo.tools -AllowClobber -Verbose -Force -Confirm:$false
+    Install-Module -Name d365fo.tools -AllowClobber -Scope CurrentUser -Verbose -Force -Confirm:$false
 }
 else
 {
