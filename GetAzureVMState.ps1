@@ -11,7 +11,6 @@ $azurePassword = ConvertTo-SecureString $AzureClientSecret -AsPlainText -Force
 $psCred = New-Object System.Management.Automation.PSCredential($AzureClientId , $azurePassword)
 
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
-Uninstall-AzureRm
 # This is requried by Find-Module, by doing it beforehand we remove some warning messages
 Write-Host "Installing PowerShell modules d365fo.tools and Az" 
 #Check Modules installed
