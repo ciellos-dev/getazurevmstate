@@ -16,27 +16,27 @@ $psCred = New-Object System.Management.Automation.PSCredential($AzureClientId , 
 Write-Host "Installing PowerShell modules d365fo.tools and AzureRM" 
 #Check Modules installed
 $NuGet = Get-PackageProvider -Name nuget -ErrorAction SilentlyContinue
-$Az = Get-InstalledModule -Name AZ -ErrorAction SilentlyContinue
+$Az = Get-InstalledModule -Name Az -ErrorAction SilentlyContinue
 $DfoTools = Get-InstalledModule -Name d365fo.tools -ErrorAction SilentlyContinue
 
 if([string]::IsNullOrEmpty($NuGet))
 {
-    Install-PackageProvider nuget -Scope CurrentUser -Force -Confirm:$false
+    Install-PackageProvider nuget -Scope CurrentUser -Verbose -Force -Confirm:$false
 }
 if([string]::IsNullOrEmpty($Az))
 {
-    Install-Module -Name AZ -AllowClobber -Scope CurrentUser -Force -Confirm:$False -SkipPublisherCheck
+    Install-Module -Name Az -AllowClobber -Scope CurrentUser -Verbose -Force -Confirm:$False -SkipPublisherCheck 
 }
 if([string]::IsNullOrEmpty($DfoTools))
 {
-    Install-Module -Name d365fo.tools -AllowClobber -Scope CurrentUser -Force -Confirm:$false
+    Install-Module -Name d365fo.tools -AllowClobber -Scope CurrentUser -Verbose -Force -Confirm:$false
 }
 
 
 Set-PSRepository -Name PSGallery -InstallationPolicy Trusted
 
 
-$AzureRMAccount = Add-AzAccount -Credential $psCred -ServicePrincipal -TenantId $AzureTenantId 
+$AzureRMAccount = Add-AzAccount -Credential $psCred -ServicePrincipal -TenantId $AzureTenantId -Verbose 
 
 if ($AzureRMAccount) { 
     #Do Logic
