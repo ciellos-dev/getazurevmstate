@@ -30,7 +30,7 @@ if([string]::IsNullOrEmpty($Az))
 }
 else
 {
-    Update-Module -Name Az
+    Update-Module -Name Az -AllowClobber -Verbose
 }
 if([string]::IsNullOrEmpty($DfoTools))
 {
@@ -38,7 +38,7 @@ if([string]::IsNullOrEmpty($DfoTools))
 }
 else
 {
-    Update-Module -Name d365fo.tools
+    Update-Module -Name d365fo.tools -AllowClobber -Verbose
 }
 
 Import-Module -Name Az
