@@ -58,8 +58,7 @@ else
     Update-Module -Name d365fo.tools -Verbose
 }
 
-Import-Module 'C:\Program Files\WindowsPowerShell\Modules\Az\7.4.0\Az.psm1' -Verbose 
-Import-Module 'd365fo.tools'
+Import-Module '$PSScriptRoot\modules\az\Az.psm1' -Verbose 
 
 $AzureRMAccount = Add-AzAccount -Credential $psCred -ServicePrincipal -TenantId $AzureTenantId -Verbose 
 
