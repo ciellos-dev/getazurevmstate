@@ -15,14 +15,35 @@ $psCred = New-Object System.Management.Automation.PSCredential($AzureClientId , 
 # This is requried by Find-Module, by doing it beforehand we remove some warning messages
 Write-Host "Installing PowerShell modules d365fo.tools and AzureRM" 
 #Check Modules installed
-Install-PackageProvider nuget -Scope CurrentUser -Verbose -Force -Confirm:$false
-Install-Module -Name Az -AllowClobber -Scope CurrentUser -Verbose -Force -Confirm:$False -SkipPublisherCheck 
-Install-Module -Name d365fo.tools -AllowClobber -Scope CurrentUser -Verbose -Force -Confirm:$false
+$NuGet = Get-PackageProvider -Name nuget -ErrorAction SilentlyContinue
+$Az = Get-InstalledModule -Name Az -ErrorAction SilentlyContinue
+$DfoTools = Get-InstalledModule -Name d365fo.tools -ErrorAction SilentlyContinue
+Set-PSRepository -Name PSGallery -InstallationPolicy Trusted
+if([string]::IsNullOrEmpty($NuGet))
+{
+    Install-PackageProvider nuget -Scope CurrentUser -Verbose -Force -Confirm:$false
+}
+
+if([string]::IsNullOrEmpty($Az))
+{
+    Install-Module -Name Az -AllowClobber -Scope CurrentUser -Verbose -Force -Confirm:$False -SkipPublisherCheck 
+}
+else
+{
+    Update-Module -Name Az
+}
+if([string]::IsNullOrEmpty($DfoTools))
+{
+    Install-Module -Name d365fo.tools -AllowClobber -Scope CurrentUser -Verbose -Force -Confirm:$false
+}
+else
+{
+    Update-Module -Name d365fo.tools
+}
 
 Import-Module -Name Az
-Install-Module -Name d365fo.tools
+Import-Module -Name d365fo.tools
 
-Set-PSRepository -Name PSGallery -InstallationPolicy Trusted
 $AzureRMAccount = Add-AzAccount -Credential $psCred -ServicePrincipal -TenantId $AzureTenantId -Verbose 
 
 if ($AzureRMAccount) { 
