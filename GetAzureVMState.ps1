@@ -32,10 +32,8 @@ if([string]::IsNullOrEmpty($DfoTools))
     Install-Module -Name d365fo.tools -AllowClobber -Scope CurrentUser -Verbose -Force -Confirm:$false
 }
 
-
+Import-Module Az
 Set-PSRepository -Name PSGallery -InstallationPolicy Trusted
-
-
 $AzureRMAccount = Add-AzAccount -Credential $psCred -ServicePrincipal -TenantId $AzureTenantId -Verbose 
 
 if ($AzureRMAccount) { 
