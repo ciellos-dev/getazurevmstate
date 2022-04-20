@@ -18,6 +18,12 @@ $NuGet = Get-PackageProvider -Name nuget -ErrorAction SilentlyContinue
 $Az = Get-InstalledModule -Name Az -ErrorAction SilentlyContinue
 $DfoTools = Get-InstalledModule -Name d365fo.tools -ErrorAction SilentlyContinue
 
+if(Get-PSRepository -Name PSGallery1 -ErrorAction SilentlyContinue)
+{
+    Unregister-PSRepository -Name PSGallery1
+}
+Install-PackageProvider -Name NuGet -MinimumVersion 2.8.5.201 -Force -Scope AllUsers
+Register-PSRepository -Name PSGallery -SourceLocation https://www.powershellgallery.com/api/v2 -InstallationPolicy Trusted
 Set-PSRepository -Name PSGallery -InstallationPolicy Trusted
 
 if([string]::IsNullOrEmpty($NuGet))
