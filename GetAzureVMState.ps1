@@ -11,7 +11,7 @@ $azurePassword = ConvertTo-SecureString $AzureClientSecret -AsPlainText -Force
 $psCred = New-Object System.Management.Automation.PSCredential($AzureClientId , $azurePassword)
 
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
-
+Uninstall-AzureRm
 # This is requried by Find-Module, by doing it beforehand we remove some warning messages
 Write-Host "Installing PowerShell modules d365fo.tools and Az" 
 #Check Modules installed
@@ -29,17 +29,18 @@ if([string]::IsNullOrEmpty($NuGet))
 if([string]::IsNullOrEmpty($Az))
 {
     Write-Host "Az not installed. Installing..." 
-    Install-Module -Name Az -AllowClobber -Scope CurrentUser -Verbose -Force -Confirm:$False -SkipPublisherCheck 
+    Install-Module -Name Az -AllowClobber -Verbose -Force -Confirm:$False -SkipPublisherCheck 
 }
 else
 {
+    
     Write-Host "Az already installed. Updating..." 
     Update-Module -Name Az -Verbose
 }
 if([string]::IsNullOrEmpty($DfoTools))
 {
     Write-Host "d365fo.tools not installed. Installing..." 
-    Install-Module -Name d365fo.tools -AllowClobber -Scope CurrentUser -Verbose -Force -Confirm:$false
+    Install-Module -Name d365fo.tools -AllowClobber -Verbose -Force -Confirm:$false
 }
 else
 {
