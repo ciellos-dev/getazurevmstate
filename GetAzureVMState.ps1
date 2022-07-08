@@ -29,7 +29,7 @@ if ($AzureRMAccount) {
     Write-Host "== Logged in == $AzureTenantId "
 
     Write-Host "Getting Azure VM State $AzureVMName"
-    $PowerState = (az vm list -d --query "[?name=='$($AzureVMName)'].powerState").Trim().Trim("[").Trim("]").Trim('"').Trim("VM ").Trim(" ")
+    $PowerState = ([string](az vm list -d --query "[?name=='$($AzureVMName)'].powerState").Trim().Trim("[").Trim("]").Trim('"').Trim("VM ")).Replace(' ','')
     Write-Host "....state is" $PowerState
     return $PowerState
 }
